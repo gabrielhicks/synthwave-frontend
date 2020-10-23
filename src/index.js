@@ -47,6 +47,9 @@ function crudHandler() {
                 .then(song => getAllSongs())
             }
         }
+        // if(e.target.matches("button.mute")) {
+        //     disableSound()
+        // }
     }) 
 }
 

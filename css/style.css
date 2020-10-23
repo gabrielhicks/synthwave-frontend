@@ -184,7 +184,16 @@ button.sound {
     width: 30px;
 	height: 30px;
 	font-weight: bolder;
-	background-color: rgba(78, 157, 0, 1);;
+	background-color: rgba(78, 157, 0, 0.9);;
+    outline: none;
+    /* position: fixed; */
+}
+
+button.mute {
+    /* width: 30px; */
+	height: 30px;
+	font-weight: bolder;
+	background-color: rgba(82, 82, 82, 0.9);;
     outline: none;
     /* position: fixed; */
 }
