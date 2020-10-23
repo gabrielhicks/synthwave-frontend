@@ -1,3 +1,3 @@
 # Synthwave
 
-![alt text](https://github.com/gabrielhicks/synthwave-frontend/public/images/synthwave.png?raw=true)
+![alt text](https://github.com/gabrielhicks/synthwave-frontend/blob/main/public/images/synthwave.png)
