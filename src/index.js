@@ -29,7 +29,7 @@ function crudHandler() {
         if(e.target.matches("button.load")) {
             let player = document.querySelector("#newRecording")
             let songName = e.target.dataset.song
-            let loadPath = "/Users/gabrielhicks/Flatiron/code/3Mod/Project/wednesday/Synthwave-backend/app/songs/"+songName+".wav"
+            let loadPath = "/Users/gabrielhicks/Flatiron/code/3Mod/Project/Synthwave/synthwave-backend/app/songs/"+songName+".wav"
             player.src = loadPath
         }
         if(e.target.matches("button.delete")) {
@@ -89,7 +89,7 @@ let counter = 0
 
 function recordAudio() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext
-    let context = new AudioContext()
+    // let context = new AudioContext()
     navigator.mediaDevices.getUserMedia ({audio: true})
     .then(function(stream) {
         const mediaRecorder = new MediaRecorder(stream)
@@ -356,6 +356,8 @@ function getComments() {
     fetch("http://localhost:3000/comments")
     .then(resp => resp.json())
     .then(comments => {
+        let commentUl = document.querySelector("ul#commentlist")
+        commentUl.innerHTML = ""
         renderComments(comments)
     })
 }
@@ -450,7 +452,7 @@ function renderSong(song) {
 
 function getSongFile(song) {
     const playBar = document.getElementById("newRecording")
-    playBar.src = `/Users/gabrielhicks/Flatiron/code/3Mod/Project/wednesday/Synthwave-backend/app/songs/${song}.wav`
+    playBar.src = `/Users/gabrielhicks/Flatiron/code/3Mod/Project/Synthwave/synthwave-backend/app/songs/${song}.wav`
 }
 
 function formNoSound() {
