@@ -29,7 +29,7 @@ function crudHandler() {
         if(e.target.matches("button.load")) {
             let player = document.querySelector("#newRecording")
             let songName = e.target.dataset.song
-            let loadPath = "/Users/gabrielhicks/Flatiron/code/3Mod/Project/Synthwave/synthwave-backend/app/songs/"+songName+".wav"
+            let loadPath = e.target.dataset.location
             player.src = loadPath
         }
         if(e.target.matches("button.delete")) {
