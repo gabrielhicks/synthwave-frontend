@@ -9,7 +9,7 @@ function initMp3Player(){
     context = new window.AudioContext
     window.AudioContext = window.AudioContext || window.webkitAudioContext
     let audio = document.querySelector("#newRecording")
-    audio.crossOrigin = "anonymous"
+    // audio.crossOrigin = "anonymous"
 	analyser = context.createAnalyser()
 	canvas = document.getElementById('audio_visual')
 	ctx = canvas.getContext('2d')
