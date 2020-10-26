@@ -72,7 +72,7 @@ function postSong(audio) {
         body: formData
     }
 
-    fetch('http://localhost:3000/songs/', options)
+    fetch('https://synthwaveheroku.herokuapp.com/songs/', options)
     .then(response => {
         let tempId = songForm.dataset.key
         let tempSong = document.querySelector(`[data-num="${tempId}"]`)
