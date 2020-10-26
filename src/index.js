@@ -454,10 +454,10 @@ function renderSong(song) {
     songLi.append(loadButton)
 }
 
-function getSongFile(song) {
-    const playBar = document.getElementById("newRecording")
-    playBar.src = `/Users/gabrielhicks/Flatiron/code/3Mod/Project/Synthwave/synthwave-backend/app/songs/${song}.wav`
-}
+// function getSongFile(song) {
+//     const playBar = document.getElementById("newRecording")
+//     playBar.src = `/Users/gabrielhicks/Flatiron/code/3Mod/Project/Synthwave/synthwave-backend/app/songs/${song}.wav`
+// }
 
 function formNoSound() {
     document.addEventListener("click", e => {
