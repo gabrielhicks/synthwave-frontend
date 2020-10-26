@@ -27,10 +27,11 @@ function crudHandler() {
             formContainer.append(form)
         }
         if(e.target.matches("button.load")) {
+            let proxy = "https://cors-anywhere.herokuapp.com/"
             let player = document.querySelector("#newRecording")
             let songName = e.target.dataset.song
             let loadPath = e.target.dataset.location
-            player.src = loadPath
+            player.src = `${proxy}${loadPath}`
         }
         if(e.target.matches("button.delete")) {
             e.target.parentElement.remove()
