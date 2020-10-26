@@ -99,7 +99,7 @@ div[data-status="nopress"] {
 
 div[data-status="pressed"] {
     color: rgba(254, 241, 96, 0.5);
-    box-shadow: 0px 1px 3px #666;
+    box-shadow: 0px 3px 5px rgba(254, 241, 96, 0.7);
 }
 
 li[data-status="nopress"] {
@@ -109,7 +109,7 @@ li[data-status="nopress"] {
 
 li[data-status="pressed"] {
     color: rgba(254, 241, 96, 0.5);
-    box-shadow: 0px 1px 3px #666;
+    box-shadow: 0px 3px 5px rgba(254, 241, 96, 0.7);
 }
 
 div#sound-clips {
