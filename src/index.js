@@ -31,7 +31,7 @@ function crudHandler() {
             let player = document.querySelector("#newRecording")
             let songName = e.target.dataset.song
             let loadPath = e.target.dataset.location
-            player.src = `${proxy}${loadPath}`
+            player.src = "https://cors-anywhere.herokuapp.com/"+loadPath
         }
         if(e.target.matches("button.delete")) {
             e.target.parentElement.remove()
