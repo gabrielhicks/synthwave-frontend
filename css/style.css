@@ -412,13 +412,13 @@ footer p a:hover{
 }
 
 a {
-    color: rgb(103, 65, 114);
+    color: rgb(183, 111, 203);
 }
 
 footer p:hover{
     transform: scale(1.03);
     opacity: 1;
-    color: rgb(103, 65, 114);
+    color: rgb(183, 111, 203);
 }
 
 footer h6{
