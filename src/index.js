@@ -42,7 +42,7 @@ function crudHandler() {
                 options = {
                     method: "DELETE"
                 }
-                fetch(`http://localhost:3000/songs/${songId}`, options)
+                fetch(`https://synthwaveheroku.herokuapp.com/songs/${songId}`, options)
                 .then(response => response.json())
                 .then(song => getAllSongs())
             }
@@ -356,7 +356,7 @@ function disableSound() {
 }
 
 function getComments() {
-    fetch("http://localhost:3000/comments")
+    fetch("https://synthwaveheroku.herokuapp.com/comments")
     .then(resp => resp.json())
     .then(comments => {
         let commentUl = document.querySelector("ul#commentlist")
@@ -406,7 +406,7 @@ function submitHandler() {
         body: JSON.stringify(newComment)
     }
 
-        fetch("http://localhost:3000/comments", options)
+        fetch("https://synthwaveheroku.herokuapp.com/comments", options)
         .then(resp => resp.json())
         .then(comment => {
             getComments()
@@ -416,7 +416,7 @@ function submitHandler() {
 }
 
 function getAllSongs() {
-    fetch('http://localhost:3000/songs')
+    fetch('https://synthwaveheroku.herokuapp.com/songs')
     .then(response => response.json())
     .then(songs => renderSongList(songs))
 }
@@ -434,6 +434,7 @@ function renderSongList(songs) {
         destroyButton.classList.add("destroy")
         destroyButton.innerText = "X"
         destroyButton.dataset.id = song.id
+        loadButton.dataset.location = song.location
         loadButton.classList.add("load")
         loadButton.innerText = "↑"
         songLi.append(loadButton)
