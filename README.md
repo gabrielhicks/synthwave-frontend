@@ -1,3 +1,3 @@
 # Synthwave
-https://gabrielhicks.github.io/synthwave-frontend/
+https://synthwavejs.herokuapp.com/
 ![alt text](https://github.com/gabrielhicks/synthwave-frontend/blob/main/public/images/synthwave.png)
