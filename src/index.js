@@ -1,249 +1,253 @@
-document.addEventListener("DOMContentLoaded", function() {
-    getComments()
-    keyHandler()
-    soundHandler()
-    sampleHandler()
-    recordAudio()
-    disableSound()
-    getAllSongs()
-    formNoSound()
-    crudHandler()
-    submitHandler()
-})
+document.addEventListener('DOMContentLoaded', function () {
+    getComments();
+    keyHandler();
+    soundHandler();
+    sampleHandler();
+    recordAudio();
+    disableSound();
+    getAllSongs();
+    formNoSound();
+    crudHandler();
+    submitHandler();
+});
 
 function crudHandler() {
-    document.addEventListener("click", e => {
-        if(e.target.matches("button.save")) {
-            const formContainer = document.querySelector("#form-container")
-            const form = document.createElement('form')
-            const formSubmit = document.querySelector("#song-submit")
-            form.id = "song-form"
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('button.save')) {
+            const formContainer = document.querySelector('#form-container');
+            const form = document.createElement('form');
+            const formSubmit = document.querySelector('#song-submit');
+            form.id = 'song-form';
             form.innerHTML = `
             <input id="title" type="text" name="name" placeholder="Song name..." >
             <input id="artist" type="text" name="author" placeholder="Artist name..." >
-            <button id="song-submit" type="submit">Upload</button>`
-            let blobKey = e.target.parentElement.children[0].dataset.num
-            form.dataset.key = blobKey
-            formContainer.append(form)
+            <button id="song-submit" type="submit">Upload</button>`;
+            let blobKey = e.target.parentElement.children[0].dataset.num;
+            form.dataset.key = blobKey;
+            formContainer.append(form);
         }
-        if(e.target.matches("button.load")) {
-            let proxy = "https://cors-anywhere.herokuapp.com/"
-            let player = document.querySelector("#newRecording")
-            let songName = e.target.dataset.song
-            let loadPath = e.target.dataset.location
-            player.src = "https://cors-anywhere.herokuapp.com/"+loadPath
+        if (e.target.matches('button.load')) {
+            let proxy = 'https://cors-anywhere.herokuapp.com/';
+            let player = document.querySelector('#newRecording');
+            let songName = e.target.dataset.song;
+            let loadPath = e.target.dataset.location;
+            player.src = 'https://cors-anywhere.herokuapp.com/' + loadPath;
         }
-        if(e.target.matches("button.delete")) {
-            e.target.parentElement.remove()
+        if (e.target.matches('button.delete')) {
+            e.target.parentElement.remove();
         }
-        if(e.target.matches("button.destroy")) {
-            let songId = e.target.dataset.id
-            deleteSongFile(songId)
+        if (e.target.matches('button.destroy')) {
+            let songId = e.target.dataset.id;
+            deleteSongFile(songId);
             function deleteSongFile(songId) {
                 options = {
-                    method: "DELETE"
-                }
-                fetch(`https://synthwaveheroku.herokuapp.com/songs/${songId}`, options)
-                .then(response => response.json())
-                .then(song => getAllSongs())
+                    method: 'DELETE',
+                };
+                fetch(
+                    `https://synthwaveheroku.herokuapp.com/songs/${songId}`,
+                    options
+                )
+                    .then((response) => response.json())
+                    .then((song) => getAllSongs());
             }
         }
         // if(e.target.matches("button.mute")) {
         //     disableSound()
         // }
-    }) 
+    });
 }
 
 function postSong(audio) {
-    let songForm = document.getElementById('song-form')
-    let formData =  new FormData()
-    let nameStr = songForm["name"].value
-    let authorStr = songForm["author"].value
-    let newName = nameStr.replace(/\s/g, '')
-    let newAuthor = authorStr.replace(/\s/g, '')
-    let file = new File([audio], `${newName}.wav`, {'type': 'audio/wav'})
-    formData.append("name", newName)
-    formData.append("author", newAuthor)
-    formData.append("file", file)
+    let songForm = document.getElementById('song-form');
+    let formData = new FormData();
+    let nameStr = songForm['name'].value;
+    let authorStr = songForm['author'].value;
+    let newName = nameStr.replace(/\s/g, '');
+    let newAuthor = authorStr.replace(/\s/g, '');
+    let file = new File([audio], `${newName}.wav`, { type: 'audio/wav' });
+    formData.append('name', newName);
+    formData.append('author', newAuthor);
+    formData.append('file', file);
 
     let options = {
         method: 'POST',
         mode: 'no-cors',
         credentials: 'same-origin',
-        body: formData
-    }
+        body: formData,
+    };
 
-    fetch('https://synthwaveheroku.herokuapp.com/songs/', options)
-    .then(response => {
-        let tempId = songForm.dataset.key
-        let tempSong = document.querySelector(`[data-num="${tempId}"]`)
-        tempSong.parentElement.remove()
-        clearForm()
-        getAllSongs()
-    })
+    fetch('https://synthwaveheroku.herokuapp.com/songs/', options).then(
+        (response) => {
+            let tempId = songForm.dataset.key;
+            let tempSong = document.querySelector(`[data-num="${tempId}"]`);
+            tempSong.parentElement.remove();
+            clearForm();
+            getAllSongs();
+        }
+    );
 }
 
 function clearForm() {
-    let formContainer = document.getElementById('form-container')
-    formContainer.innerHTML = ''
+    let formContainer = document.getElementById('form-container');
+    formContainer.innerHTML = '';
 }
 
-let tempBlobs = {}
-let counter = 0
+let tempBlobs = {};
+let counter = 0;
 
 function recordAudio() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
     // let context = new AudioContext()
-    navigator.mediaDevices.getUserMedia ({audio: true})
-    .then(function(stream) {
-        const mediaRecorder = new MediaRecorder(stream)
-        const record = document.querySelector('#record')
-        const stop = document.querySelector('.stop')
-        record.onclick = function() {
-            mediaRecorder.start()
-            record.classList.add("active")
-        }
+    navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(function (stream) {
+            const mediaRecorder = new MediaRecorder(stream);
+            const record = document.querySelector('#record');
+            const stop = document.querySelector('.stop');
+            record.onclick = function () {
+                mediaRecorder.start();
+                record.classList.add('active');
+            };
 
-        let chunks = []
+            let chunks = [];
 
-        mediaRecorder.ondataavailable = function(e) {
-            chunks.push(e.data)
-        }
+            mediaRecorder.ondataavailable = function (e) {
+                chunks.push(e.data);
+            };
 
-        stop.onclick = function() {
-            mediaRecorder.stop()
-            record.classList.remove("active")
-        }
-        
-        mediaRecorder.onstop = function(e) {
-            const soundClips = document.querySelector('#sound-clips')
-            const clipContainer = document.createElement('article')
-            const audio = document.createElement('audio')
-            const deleteButton = document.createElement('button')
-            const saveButton = document.createElement('button')
+            stop.onclick = function () {
+                mediaRecorder.stop();
+                record.classList.remove('active');
+            };
 
-            clipContainer.classList.add('clip')
-            audio.setAttribute('controls', '')
-            deleteButton.innerHTML = "X"
-            deleteButton.classList.add("delete")
-            saveButton.innerText = "↓"
-            saveButton.classList.add("save")
+            mediaRecorder.onstop = function (e) {
+                const soundClips = document.querySelector('#sound-clips');
+                const clipContainer = document.createElement('article');
+                const audio = document.createElement('audio');
+                const deleteButton = document.createElement('button');
+                const saveButton = document.createElement('button');
 
-            clipContainer.appendChild(audio)
+                clipContainer.classList.add('clip');
+                audio.setAttribute('controls', '');
+                deleteButton.innerHTML = 'X';
+                deleteButton.classList.add('delete');
+                saveButton.innerText = '↓';
+                saveButton.classList.add('save');
 
-            let oldOne = document.querySelector("#new")
-            if(oldOne) {
-                oldOne.remove()
-            }
+                clipContainer.appendChild(audio);
 
-            soundClips.appendChild(clipContainer)
-            clipContainer.appendChild(deleteButton)
-            clipContainer.appendChild(saveButton)
+                let oldOne = document.querySelector('#new');
+                if (oldOne) {
+                    oldOne.remove();
+                }
 
-            const blob = new Blob(chunks, { 'type' : 'audio/wav' })
-            counter += 1
-            tempBlobs[counter] = blob
-            chunks = []
-            const audioURL = window.URL.createObjectURL(blob)
-            audio.src = audioURL
-            audio.dataset.num = counter
-        }
-    })
+                soundClips.appendChild(clipContainer);
+                clipContainer.appendChild(deleteButton);
+                clipContainer.appendChild(saveButton);
+
+                const blob = new Blob(chunks, { type: 'audio/wav' });
+                counter += 1;
+                tempBlobs[counter] = blob;
+                chunks = [];
+                const audioURL = window.URL.createObjectURL(blob);
+                audio.src = audioURL;
+                audio.dataset.num = counter;
+            };
+        });
 }
 
 function keyHandler() {
-    document.addEventListener('keydown', e => {
+    document.addEventListener('keydown', (e) => {
         if (e.key === 'a') {
-            const note = document.getElementById("C")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('C');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'w') {
-            const note = document.getElementById("Db")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('Db');
+            note.dataset.status = 'pressed';
         } else if (e.key === 's') {
-            const note = document.getElementById("D")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('D');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'e') {
-            const note = document.getElementById("Eb")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('Eb');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'd') {
-            const note = document.getElementById("E")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('E');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'f') {
-            const note = document.getElementById("F")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('F');
+            note.dataset.status = 'pressed';
         } else if (e.key === 't') {
-            const note = document.getElementById("Gb")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('Gb');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'g') {
-            const note = document.getElementById("G")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('G');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'y') {
-            const note = document.getElementById("Ab")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('Ab');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'h') {
-            const note = document.getElementById("A")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('A');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'u') {
-            const note = document.getElementById("Bb")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('Bb');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'j') {
-            const note = document.getElementById("B")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('B');
+            note.dataset.status = 'pressed';
         } else if (e.key === 'k') {
-            const note = document.getElementById("C1")
-            note.dataset.status = "pressed"
+            const note = document.getElementById('C1');
+            note.dataset.status = 'pressed';
         }
-    })
+    });
 
-    document.addEventListener('keyup', e => {
+    document.addEventListener('keyup', (e) => {
         if (e.key === 'a') {
-            const note = document.getElementById("C")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('C');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'w') {
-            const note = document.getElementById("Db")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('Db');
+            note.dataset.status = 'nopress';
         } else if (e.key === 's') {
-            const note = document.getElementById("D")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('D');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'e') {
-            const note = document.getElementById("Eb")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('Eb');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'd') {
-            const note = document.getElementById("E")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('E');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'f') {
-            const note = document.getElementById("F")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('F');
+            note.dataset.status = 'nopress';
         } else if (e.key === 't') {
-            const note = document.getElementById("Gb")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('Gb');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'g') {
-            const note = document.getElementById("G")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('G');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'y') {
-            const note = document.getElementById("Ab")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('Ab');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'h') {
-            const note = document.getElementById("A")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('A');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'u') {
-            const note = document.getElementById("Bb")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('Bb');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'j') {
-            const note = document.getElementById("B")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('B');
+            note.dataset.status = 'nopress';
         } else if (e.key === 'k') {
-            const note = document.getElementById("C1")
-            note.dataset.status = "nopress"
+            const note = document.getElementById('C1');
+            note.dataset.status = 'nopress';
         }
-    })
-
+    });
 }
 
 function sampleHandler() {
-    document.addEventListener("click", e => {
-        const keyboard = document.querySelector("#keyboard")
-        if(e.target.matches("#samples1")) {
+    document.addEventListener('click', (e) => {
+        const keyboard = document.querySelector('#keyboard');
+        if (e.target.matches('#samples1')) {
             keyboard.innerHTML = `
         <li data-note="261-C.mp3" data-key="65" id="C" data-status="nopress" class="white-key">
             <div data-note="277-C-sharp.mp3" data-key="87" id="Db" data-status="nopress" class="black-key"></div>
@@ -263,9 +267,9 @@ function sampleHandler() {
         </li>
         <li data-note="495-B.mp3" data-key="74" id="B" data-status="nopress" class="white-key"></li>
         <li data-note="523-C.mp3" data-key="75" id="C1" data-status="nopress" class="white-key"></li>
-            `
+            `;
         }
-        if(e.target.matches("#samples2")) {
+        if (e.target.matches('#samples2')) {
             keyboard.innerHTML = `
         <li data-note="523-C.mp3" data-key="65" id="C" data-status="nopress" class="white-key"> 
             <div data-note="545-C-sharp.mp3" data-key="87" id="Db" data-status="nopress" class="black-key"></div>
@@ -285,9 +289,9 @@ function sampleHandler() {
         </li>
         <li data-note="987-B.mp3" data-key="74" id="B" data-status="nopress" class="white-key"></li>
         <li data-note="1046-C.mp3" data-key="75" id="C1" data-status="nopress" class="white-key"></li>
-            `
+            `;
         }
-        if(e.target.matches("#samples3")) {
+        if (e.target.matches('#samples3')) {
             keyboard.innerHTML = `
         <li data-note="Pad14.wav" data-key="65" id="C" data-status="nopress" class="white-key"> 
             <div data-note="Pad2.wav" data-key="87" id="Db" data-status="nopress" class="black-key"></div>
@@ -307,152 +311,152 @@ function sampleHandler() {
         </li>
         <li data-note="Pad12.wav" data-key="74" id="B" data-status="nopress" class="white-key"></li>
         <li data-note="Pad13.wav" data-key="75" id="C1" data-status="nopress" class="white-key"></li>
-            `
+            `;
         }
-    })
+    });
 }
 
 function soundHandler() {
     function playAudio(keyCode) {
-        var audio = new Audio('media/'+keyCode)
+        var audio = new Audio('media/' + keyCode);
         audio.play();
     }
 
-    function pressKey(keyCode){
-        let key = document.querySelectorAll("[data-key='"+keyCode+"']")[0]
+    function pressKey(keyCode) {
+        let key = document.querySelectorAll("[data-key='" + keyCode + "']")[0];
         if (key && key.classList.contains('is-active') == false) {
-            key.classList.add('is-active')
-            playAudio(key.dataset.note)
+            key.classList.add('is-active');
+            playAudio(key.dataset.note);
         }
     }
 
     function releaseKey(keyCode) {
-        let key = document.querySelectorAll("[data-key='"+keyCode+"']")[0]
+        let key = document.querySelectorAll("[data-key='" + keyCode + "']")[0];
         if (key) {
-            key.classList.remove('is-active')
+            key.classList.remove('is-active');
         }
     }
 
-    document.addEventListener("keydown",function(event) {
-        pressKey(event.keyCode)
-    })
+    document.addEventListener('keydown', function (event) {
+        pressKey(event.keyCode);
+    });
 
-    document.addEventListener("keyup",function(event) {
-        releaseKey(event.keyCode)
-    })
+    document.addEventListener('keyup', function (event) {
+        releaseKey(event.keyCode);
+    });
 }
 
 function disableSound() {
-    const whiteKeys = document.getElementsByClassName('white-key')
-    const blackKeys = document.getElementsByClassName('black-key')
-    const blackKeyArray = [...blackKeys]
-    const whiteKeyArray = [...whiteKeys]
+    const whiteKeys = document.getElementsByClassName('white-key');
+    const blackKeys = document.getElementsByClassName('black-key');
+    const blackKeyArray = [...blackKeys];
+    const whiteKeyArray = [...whiteKeys];
     for (const key of whiteKeyArray) {
-        key.dataset.note = ""
+        key.dataset.note = '';
     }
 
     for (const key of blackKeyArray) {
-        key.dataset.note = ""
+        key.dataset.note = '';
     }
 }
 
 function getComments() {
-    fetch("https://synthwaveheroku.herokuapp.com/comments")
-    .then(resp => resp.json())
-    .then(comments => {
-        let commentUl = document.querySelector("ul#commentlist")
-        commentUl.innerHTML = ""
-        renderComments(comments)
-    })
+    fetch('https://synthwaveheroku.herokuapp.com/comments')
+        .then((resp) => resp.json())
+        .then((comments) => {
+            let commentUl = document.querySelector('ul#commentlist');
+            commentUl.innerHTML = '';
+            renderComments(comments);
+        });
 }
 
 function renderComments(comments) {
-    for(comment of comments) {
-        renderComment(comment)
+    for (comment of comments) {
+        renderComment(comment);
     }
 }
 
 function renderComment(comment) {
-    const commentSection = document.querySelector("#commentlist")
-    let newLi = document.createElement("li")
-    newLi.innerHTML = `<b>${comment.user.name}:</b> ${comment.content}`
-    commentSection.append(newLi)
+    const commentSection = document.querySelector('#commentlist');
+    let newLi = document.createElement('li');
+    newLi.innerHTML = `<b>${comment.user.name}:</b> ${comment.content}`;
+    commentSection.append(newLi);
 }
 
 function submitHandler() {
-    document.addEventListener("submit", e => {
-        e.preventDefault()
-        if(e.target.matches("form#commentform")) {
-            postComments()
+    document.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (e.target.matches('form#commentform')) {
+            postComments();
         }
-        if(e.target.matches("form#song-form")) {
-            let blobKey = e.target.dataset.key
-            let saveBlob = tempBlobs[blobKey]
-            console.log(saveBlob)
-            postSong(saveBlob)
+        if (e.target.matches('form#song-form')) {
+            let blobKey = e.target.dataset.key;
+            let saveBlob = tempBlobs[blobKey];
+            console.log(saveBlob);
+            postSong(saveBlob);
         }
-    })
+    });
 
     function postComments() {
-        const form = document.querySelector("form")
-        let username = form.user.value
-        let content = form.content.value
-        const newComment = {user: username, content: content}
+        const form = document.querySelector('form');
+        let username = form.user.value;
+        let content = form.content.value;
+        const newComment = { user: username, content: content };
         let options = {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-        },
-        body: JSON.stringify(newComment)
-    }
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+            },
+            body: JSON.stringify(newComment),
+        };
 
-        fetch("https://synthwaveheroku.herokuapp.com/comments", options)
-        .then(resp => resp.json())
-        .then(comment => {
-            getComments()
-            form.reset()
-        })
+        fetch('https://synthwaveheroku.herokuapp.com/comments', options)
+            .then((resp) => resp.json())
+            .then((comment) => {
+                getComments();
+                form.reset();
+            });
     }
 }
 
 function getAllSongs() {
     fetch('https://synthwaveheroku.herokuapp.com/songs')
-    .then(response => response.json())
-    .then(songs => renderSongList(songs))
+        .then((response) => response.json())
+        .then((songs) => renderSongList(songs));
 }
 
 function renderSongList(songs) {
-    const listContainer = document.getElementById("audiolist")
-    listContainer.innerHTML = ""
+    const listContainer = document.getElementById('audiolist');
+    listContainer.innerHTML = '';
     for (const song of songs) {
-        let songLi = document.createElement('li')
-        listContainer.append(songLi)
-        songLi.innerHTML = `<b>${song.author}:</b> ${song.name}`
-        let loadButton = document.createElement('button')
-        let destroyButton = document.createElement("button")
-        loadButton.dataset.song = song.name
-        destroyButton.classList.add("destroy")
-        destroyButton.innerText = "X"
-        destroyButton.dataset.id = song.id
-        loadButton.dataset.location = song.location
-        loadButton.classList.add("load")
-        loadButton.innerText = "↑"
-        songLi.append(loadButton)
-        songLi.append(destroyButton)
+        let songLi = document.createElement('li');
+        listContainer.append(songLi);
+        songLi.innerHTML = `<b>${song.author}:</b> ${song.name}`;
+        let loadButton = document.createElement('button');
+        let destroyButton = document.createElement('button');
+        loadButton.dataset.song = song.name;
+        destroyButton.classList.add('destroy');
+        destroyButton.innerText = 'X';
+        destroyButton.dataset.id = song.id;
+        loadButton.dataset.location = song.location;
+        loadButton.classList.add('load');
+        loadButton.innerText = '↑';
+        songLi.append(loadButton);
+        songLi.append(destroyButton);
     }
 }
 
 function renderSong(song) {
-    const listContainer = document.getElementById("audiolist")
-    let songLi = document.createElement('li')
-    listContainer.append(songLi)
-    songLi.innerHTML = `<b>${song.author}:</b> ${song.name}`
-    let loadButton = document.createElement('button')
-    loadButton.dataset.song = `${song.name}`
-    loadButton.classList.add("load")
-    loadButton.innerText = "Load"
-    songLi.append(loadButton)
+    const listContainer = document.getElementById('audiolist');
+    let songLi = document.createElement('li');
+    listContainer.append(songLi);
+    songLi.innerHTML = `<b>${song.author}:</b> ${song.name}`;
+    let loadButton = document.createElement('button');
+    loadButton.dataset.song = `${song.name}`;
+    loadButton.classList.add('load');
+    loadButton.innerText = 'Load';
+    songLi.append(loadButton);
 }
 
 // function getSongFile(song) {
@@ -461,11 +465,11 @@ function renderSong(song) {
 // }
 
 function formNoSound() {
-    document.addEventListener("click", e => {
-        if(e.target.matches("textarea")) {
-            disableSound()
-        } else if(e.target.matches("input")) {
-            disableSound()
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('textarea')) {
+            disableSound();
+        } else if (e.target.matches('input')) {
+            disableSound();
         }
-    })
+    });
 }

@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
-
 body {
     margin-top: 0vh;
     margin-bottom: 0vh;
     display: flex;
     min-height: 50vh;
     min-width: 50vh;
-    background-image: url("https://ourmoblog.files.wordpress.com/2016/12/larger-23.jpg");
+    background-image: url('https://ourmoblog.files.wordpress.com/2016/12/larger-23.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     justify-content: center;
@@ -34,7 +33,6 @@ ul#keyboard {
     margin: auto;
 }
 
-
 div#playbar {
     width: 400px;
     height: 50px;
@@ -42,7 +40,7 @@ div#playbar {
     border-radius: 5px;
     margin: auto;
     margin-top: 1em;
-    background-image: url("../public/images/soundbar.png");
+    background-image: url('../public/images/soundbar.png');
 }
 
 div#tray {
@@ -92,22 +90,22 @@ ul .black-key {
     /* color: white; */
 }
 
-div[data-status="nopress"] {
+div[data-status='nopress'] {
     color: white;
     box-shadow: 0px 3px 5px #666;
 }
 
-div[data-status="pressed"] {
+div[data-status='pressed'] {
     color: rgba(254, 241, 96, 0.5);
     box-shadow: 0px 3px 5px rgba(254, 241, 96, 0.7);
 }
 
-li[data-status="nopress"] {
+li[data-status='nopress'] {
     color: black;
     box-shadow: 0px 3px 5px #666;
 }
 
-li[data-status="pressed"] {
+li[data-status='pressed'] {
     color: rgba(254, 241, 96, 0.5);
     box-shadow: 0px 3px 5px rgba(254, 241, 96, 0.7);
 }
@@ -147,9 +145,9 @@ button.delete {
     margin-left: 10px;
     top: 0%;
     width: 30px;
-	height: 30px;
-	font-weight: bolder;
-	background-color: rgba(78, 157, 0, 0.666);;
+    height: 30px;
+    font-weight: bolder;
+    background-color: rgba(78, 157, 0, 0.666);
     outline: none;
 }
 
@@ -157,72 +155,71 @@ button.destroy {
     margin-left: 2px;
     top: 0%;
     width: 30px;
-	height: 30px;
-	font-weight: bolder;
-	background-color: rgba(173,0,0,0.666);
+    height: 30px;
+    font-weight: bolder;
+    background-color: rgba(173, 0, 0, 0.666);
     outline: none;
 }
 
 button.save {
     width: 30px;
-	height: 30px;
-	font-weight: bolder;
-	background-color: rgba(78, 157, 0, 0.666);;
+    height: 30px;
+    font-weight: bolder;
+    background-color: rgba(78, 157, 0, 0.666);
     outline: none;
 }
 
 .clip {
-    position: relative;  
+    position: relative;
     display: inline-block;
     list-style-type: none;
     height: 35px;
     top: 0%;
 }
 
-
 button.sound {
     width: 30px;
-	height: 30px;
-	font-weight: bolder;
-	background-color: rgba(78, 157, 0, 0.9);;
+    height: 30px;
+    font-weight: bolder;
+    background-color: rgba(78, 157, 0, 0.9);
     outline: none;
     /* position: fixed; */
 }
 
 button.mute {
     /* width: 30px; */
-	height: 30px;
-	font-weight: bolder;
-	background-color: rgba(82, 82, 82, 0.9);;
+    height: 30px;
+    font-weight: bolder;
+    background-color: rgba(82, 82, 82, 0.9);
     outline: none;
     /* position: fixed; */
 }
 
 button#record {
     width: 30px;
-	height: 30px;
+    height: 30px;
     /* font-size: 0; */
     font-weight: bolder;
-	background-color: rgba(173,0,0,0.9);
-	border: 1;
-	border-radius: 30px;
-	outline: none;
+    background-color: rgba(173, 0, 0, 0.9);
+    border: 1;
+    border-radius: 30px;
+    outline: none;
 }
 
 button.stop {
     font-weight: bolder;
     width: 30px;
-	height: 30px;
-	/* font-size: 0; */
-	background-color: rgba(82, 82, 82, 0.9);
-	border: 1;
-	outline: none;
+    height: 30px;
+    /* font-size: 0; */
+    background-color: rgba(82, 82, 82, 0.9);
+    border: 1;
+    outline: none;
 }
 
-button#record.active{
+button#record.active {
     animation-name: pulse;
-	animation-duration: 1.5s;
-	animation-iteration-count: infinite;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
     animation-timing-function: linear;
     background-color: rgba(255, 0, 0, 0.9);
 }
@@ -236,17 +233,16 @@ img#logo {
 
 div#comments {
     margin-top: -3%;
-    line-height:3em;
+    line-height: 3em;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    overflow:auto;
+    overflow: auto;
     float: right;
     width: 58%;
     height: 210px;
     background-color: rgba(103, 65, 114, 0.5);
 }
-
 
 textarea {
     border-radius: 5px;
@@ -307,10 +303,9 @@ audio {
     display: inline;
 }
 
-.second{
+.second {
     float: right;
 }
-
 
 ::placeholder {
     color: rgba(220, 220, 220, 0.5);
@@ -329,7 +324,7 @@ audio {
     border-radius: 5px;
     justify-content: center;
     align-items: center;
-    overflow:auto;
+    overflow: auto;
     height: 210px;
     width: 41.5%;
     float: left;
@@ -339,11 +334,11 @@ audio {
 
 div#comments {
     margin-top: -3%;
-    line-height:3em;
+    line-height: 3em;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    overflow:auto;
+    overflow: auto;
     float: right;
     width: 58%;
     height: 210px;
@@ -355,7 +350,7 @@ button.load {
     margin-top: 2px;
     height: 30px;
     font-weight: bolder;
-	background-color: rgba(78, 157, 0, 0.666);;
+    background-color: rgba(78, 157, 0, 0.666);
     outline: none;
 }
 
@@ -364,7 +359,7 @@ button#song-submit {
     margin-top: 2px;
     height: 30px;
     font-weight: bolder;
-	background-color: rgba(78, 157, 0, 0.666);;
+    background-color: rgba(78, 157, 0, 0.666);
     outline: none;
 }
 
@@ -372,7 +367,7 @@ input#submit {
     width: 100px;
     height: 30px;
     font-weight: bolder;
-    background-color: rgba(78, 157, 0, 0.666);;
+    background-color: rgba(78, 157, 0, 0.666);
     outline: none;
 }
 
@@ -406,7 +401,7 @@ p {
     color: rgb(103, 65, 114);
 }
 
-footer p a:hover{
+footer p a:hover {
     text-decoration: none;
     color: rgb(103, 65, 114);
 }
@@ -415,28 +410,28 @@ a {
     color: rgb(183, 111, 203);
 }
 
-footer p:hover{
+footer p:hover {
     transform: scale(1.03);
     opacity: 1;
     color: rgb(183, 111, 203);
 }
 
-footer h6{
+footer h6 {
     font-size: 10pt;
     margin-bottom: -5px;
     font-weight: bold;
     color: rgb(78, 157, 0, 0.8);
 }
-footer .design{
+footer .design {
     opacity: 0.9;
 }
 
-.footerplacement{
+.footerplacement {
     position: fixed;
-    bottom:0px;
+    bottom: 0px;
 }
 
-footer{
+footer {
     font-size: 8px;
     font-weight: bold;
     text-align: center;
@@ -445,14 +440,14 @@ footer{
     width: 464px;
 }
 
-@keyframes pulse{
-    0%{
-        box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
-	}
-	65%{
-        box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
-	}
-	90%{
-        box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
-	}
+@keyframes pulse {
+    0% {
+        box-shadow: 0px 0px 5px 0px rgba(173, 0, 0, 0.3);
+    }
+    65% {
+        box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0.3);
+    }
+    90% {
+        box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0);
+    }
 }
